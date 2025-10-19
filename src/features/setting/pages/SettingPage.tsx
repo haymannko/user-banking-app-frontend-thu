@@ -1,7 +1,11 @@
-import React from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import SettingMobile from "../components/setting/SettingMobile";
+import SettingWeb from "../components/setting/SettingWeb";
 
 function SettingPage() {
-  return <div>SettingPage</div>;
+  const isMobile = useIsMobile();
+
+  return <>{isMobile ? <SettingMobile /> : <SettingWeb />}</>;
 }
 
 export default SettingPage;

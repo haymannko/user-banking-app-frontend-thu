@@ -13,7 +13,12 @@ function HomePage() {
   const isMobile = useIsMobile();
 
   return (
-    <div className="text-black-pearl-700 pt-5 md:pt-0 md:grid grid-cols-3">
+    <div
+      style={{
+        background: "linear-gradient(180.32deg, #0A3D62 6.69%, #1888D9 99.72%)",
+      }}
+      className="text-black-pearl-700  h-full pt-5 md:pt-0 md:grid grid-cols-3"
+    >
       <div className="col-span-2 md:grid grid-cols-2 ">
         <div className="flex md:hidden gap-x-3 px-2 items-center">
           <Avatar className="w-10 h-10 rounded-full">

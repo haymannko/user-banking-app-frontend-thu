@@ -22,9 +22,9 @@ function ProfileEditForm() {
   });
 
   return (
-    <div>
+    <div className="h-full">
       <Form {...form}>
-        <form className="text-black-pearl-700">
+        <form className="text-black-pearl-700 h-full flex md:block flex-col justify-between">
           <div className="md:grid grid-cols-2 gap-3">
             <FormTextInput
               name="fullName"
@@ -86,7 +86,7 @@ function ProfileEditForm() {
               labelClass="text-base text-black-preal-700"
             />
           </div>
-          <Button type="submit" className="w-full text-lg py-6">
+          <Button type="submit" className="w-full py-6">
             Save Changes
           </Button>
         </form>

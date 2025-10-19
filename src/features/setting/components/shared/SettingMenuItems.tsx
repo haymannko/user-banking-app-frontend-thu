@@ -20,9 +20,8 @@ function SettingMenuItems({ className }: SettingMenuItemsProps) {
       { name: "Info", path: "/settings" },
       { name: "Profile", path: "/settings/profile" },
       { name: "Change Password", path: "/settings/change-password" },
-      { name: "Switch Account", path: "/settings/switch-account" },
       { name: "Change Transaction Pin", path: "/settings/change-pin" },
-      { name: "Nickname Setup", path: "/settings/nickname" },
+      { name: "Nickname Setup", path: "/settings/nicknames" },
     ];
   }, []);
 

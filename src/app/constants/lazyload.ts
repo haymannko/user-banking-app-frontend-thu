@@ -50,6 +50,8 @@ export const TransactionDetailPage = PageLoader(
     () => import("@/features/transactions/pages/TransactionDetailPage")
   )
 );
+
+//* Setting Module
 export const SettingPage = PageLoader(
   lazy(() => import("@/features/setting/pages/SettingPage"))
 );
@@ -59,7 +61,6 @@ export const ProfilePage = PageLoader(
 export const ProfileEditPage = PageLoader(
   lazy(() => import("@/features/setting/pages/ProfileEditPage"))
 )
-
-export const Service = PageLoader(
-  lazy(() => import("@/features/service/Service"))
-);
+export const NickNamesPage = PageLoader(
+  lazy(() => import("@/features/setting/pages/NickNamesPage"))
+)

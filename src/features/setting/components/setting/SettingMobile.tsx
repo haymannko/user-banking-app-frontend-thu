@@ -1,6 +1,6 @@
 import MobileHeader from "@/components/core/MobileHeader";
 import SettingItemSection from "./SettingItemSection";
-import SettingProfileSection from "./SettingProfileSection";
+import SettingProfileSection from "../shared/SettingProfileSection";
 
 function SettingMobile() {
   return (

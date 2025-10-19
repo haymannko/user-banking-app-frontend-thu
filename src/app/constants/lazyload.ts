@@ -10,6 +10,10 @@ export const ScanLayout = PageLoader(
   lazy(() => import("@/components/core/layouts/ScanLayout"))
 );
 
+export const SettingLayout = PageLoader(
+  lazy(() => import("@/components/core/layouts/SettingLayout"))
+)
+
 export const TransferLayout = PageLoader(
   lazy(() => import("@/features/transfer/components/TransferLayout"))
 );
@@ -49,6 +53,12 @@ export const TransactionDetailPage = PageLoader(
 export const SettingPage = PageLoader(
   lazy(() => import("@/features/setting/pages/SettingPage"))
 );
+export const ProfilePage = PageLoader(
+  lazy(() => import("@/features/setting/pages/ProfilePage"))
+)
+export const ProfileEditPage = PageLoader(
+  lazy(() => import("@/features/setting/pages/ProfileEditPage"))
+)
 
 export const Service = PageLoader(
   lazy(() => import("@/features/service/Service"))

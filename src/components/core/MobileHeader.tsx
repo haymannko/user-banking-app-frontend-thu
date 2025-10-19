@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -6,6 +7,7 @@ interface MobileHeaderProps {
   backTo?: string;
   iconSize?: number;
   className?: string;
+  titleClassName?: string;
 }
 
 export default function MobileHeader({
@@ -13,10 +15,13 @@ export default function MobileHeader({
   backTo = "/",
   iconSize = 30,
   className = "",
+  titleClassName,
 }: MobileHeaderProps) {
   return (
-    <div className={`relative w-full mb-2 md:hidden ${className}`}>
-      <h1 className="text-center text-2xl font-semibold">{title}</h1>
+    <div className={cn("relative w-full mb-2 md:hidden", className)}>
+      <h1 className={cn("text-center text-2xl font-semibold", titleClassName)}>
+        {title}
+      </h1>
       <Link to={backTo} className="absolute left-0 top-0">
         <ChevronLeft size={iconSize} />
       </Link>

@@ -9,7 +9,7 @@ import Barcode from "react-barcode";
 function QRToPayPage() {
   return (
     <div className="h-full relative flex justify-center items-center bg-white">
-      <div className="max-w-4xl w-full text-black-pearl-700 flex flex-col justify-between items-center gap-5 md:pb-0 pb-10 p-6  mx-auto  border-gray-100">
+      <div className="max-w-4xl w-full h-full text-black-pearl-700 flex flex-col justify-between items-center gap-5 md:pb-0 pb-10 p-6  mx-auto  border-gray-100">
         <MobileHeader className="self-start" backTo="/" title="QR to Pay" />
         <Barcode className="w-[80%]" value="Hello world" displayValue={false} />
         <QRWithLogo

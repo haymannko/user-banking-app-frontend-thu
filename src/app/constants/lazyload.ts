@@ -47,7 +47,7 @@ export const TransactionPage = PageLoader(
 );
 export const TransactionDetailPage = PageLoader(
   lazy(
-    () => import("@/features/transactions/pages/TransactionHistoryDetailPage")
+    () => import("@/features/transactions/pages/TransactionDetailPage")
   )
 );
 export const SettingPage = PageLoader(

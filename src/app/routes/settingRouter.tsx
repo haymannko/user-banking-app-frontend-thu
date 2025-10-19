@@ -1,4 +1,5 @@
 import {
+  NickNamesPage,
   ProfileEditPage,
   ProfilePage,
   SettingLayout,
@@ -21,6 +22,10 @@ const settingRouter = [
       {
         path: "profile/edit",
         element: <ProfileEditPage />,
+      },
+      {
+        path: "nicknames",
+        element: <NickNamesPage />,
       },
     ],
   },

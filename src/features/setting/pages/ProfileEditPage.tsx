@@ -1,7 +1,7 @@
 import MobileHeader from "@/components/core/MobileHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SettingWedHeader from "../components/shared/SettingWedHeader";
-import SettingProfileSection from "../components/setting/SettingProfileSection";
+import SettingProfileSection from "../components/shared/SettingProfileSection";
 import ProfileEditForm from "../components/profile/ProfileEditForm";
 
 function ProfileEditPage() {

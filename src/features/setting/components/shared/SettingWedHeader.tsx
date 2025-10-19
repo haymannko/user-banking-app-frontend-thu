@@ -12,7 +12,7 @@ function SettingWedHeader({
   className,
 }: SettingWedHeaderProps) {
   return (
-    <div className={cn("pb-3 border-b mb-3", className)}>
+    <div className={cn("pb-3 hidden md:block border-b mb-3", className)}>
       <h1 className="font-semibold text-2xl text-black-pearl-700">{title}</h1>
       <p className="text-sm text-black-pearl-500">{description}</p>
     </div>

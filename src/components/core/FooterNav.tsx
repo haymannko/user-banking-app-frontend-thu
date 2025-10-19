@@ -7,6 +7,10 @@ const NO_NAV_PAGES = [
   "/scan/qr-to-pay",
   "/scan/scan-to-pay",
   "/scan/qr-to-recieve",
+  "/settings",
+  "/settings/profile",
+  "/settings/profile/edit",
+  "/settings/nicknames",
 ];
 
 function FooterNav() {

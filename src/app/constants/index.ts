@@ -15,7 +15,7 @@ export const menu = [
   },
   {
     name: "Transfer",
-    link: "/service",
+    link: "/transfer",
     icon: HelpingHand,
   },
   {

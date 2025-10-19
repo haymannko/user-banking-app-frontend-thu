@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
 import { LogOut } from "lucide-react";
-import SettingProfileSection from "./SettingProfileSection";
+import SettingProfileSection from "../shared/SettingProfileSection";
 import SettingWedHeader from "../shared/SettingWedHeader";
 
 function SettingWeb() {

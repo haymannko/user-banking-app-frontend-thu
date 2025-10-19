@@ -30,13 +30,7 @@ function CustomBreadCrumb({
           <Fragment key={index}>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link
-                  to={item.path}
-                  className={cn(
-                    "text-white/70 hover:text-white",
-                    linkTitleClassName
-                  )}
-                >
+                <Link to={item.path} className={cn("", linkTitleClassName)}>
                   {item.name}
                 </Link>
               </BreadcrumbLink>
@@ -45,7 +39,7 @@ function CustomBreadCrumb({
           </Fragment>
         ))}
         <BreadcrumbItem>
-          <BreadcrumbPage className={cn("text-white", currentTitleClassName)}>
+          <BreadcrumbPage className={cn("", currentTitleClassName)}>
             {currentPageTitle}
           </BreadcrumbPage>
         </BreadcrumbItem>

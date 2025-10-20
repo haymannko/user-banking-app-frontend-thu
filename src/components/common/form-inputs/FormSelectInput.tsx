@@ -18,7 +18,7 @@ import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 export type Option = {
   label: string;
-  value: string;
+  value: any;
 };
 
 export type FormSelectInputProps<T extends FieldValues> = {
@@ -31,6 +31,7 @@ export type FormSelectInputProps<T extends FieldValues> = {
   labelClass?: string;
   required?: boolean;
   className?: string;
+  defaultValue?: string;
 };
 
 function FormSelectInput<T extends FieldValues>({
@@ -43,6 +44,7 @@ function FormSelectInput<T extends FieldValues>({
   labelClass,
   className,
   required,
+  defaultValue,
 }: FormSelectInputProps<T>) {
   return (
     <FormField
@@ -55,13 +57,17 @@ function FormSelectInput<T extends FieldValues>({
             {required && <span className="text-red-500">*</span>}
           </FormLabel>
           <FormControl>
-            <Select value={field.value} onValueChange={field.onChange}>
+            <Select
+              defaultValue={defaultValue}
+              value={String(field.value)}
+              onValueChange={field.onChange}
+            >
               <SelectTrigger className={cn("w-full text-base", className)}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
                 {options.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
+                  <SelectItem key={opt.value} value={String(opt.value)}>
                     {opt.label}
                   </SelectItem>
                 ))}

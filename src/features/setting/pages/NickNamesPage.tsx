@@ -5,6 +5,9 @@ import SettingWedHeader from "../components/shared/SettingWedHeader";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import NickNamesForm from "../components/nickname/NickNamesForm";
 import useNickNameUIAction from "../hooks/useNickNameUIAction";
+import { useGetNicknameList } from "@/queries/users.query";
+import PageLoading from "@/components/core/PageLoading";
+import { dummyNickname } from "@/app/constants/dummyData";
 
 function NickNamesPage() {
   const {
@@ -17,8 +20,16 @@ function NickNamesPage() {
     handleOpenCreate,
   } = useNickNameUIAction();
 
+  const { data: nicknames, isLoading } = useGetNicknameList();
+
+  const nicknameData = nicknames?.data ?? dummyNickname;
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
+
   return (
-    <main className="h-full text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
+    <main className="h-full md:h-auto text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <div>
           <SettingWedHeader
@@ -26,7 +37,11 @@ function NickNamesPage() {
             description="your close friends and favourite person are here."
           />
           <NickNamesHeader isEdit={isEdit} editToggle={editToggle} />
-          <NickNamesList isEdit={isEdit} handleEdit={handleOpenEdit} />
+          <NickNamesList
+            isEdit={isEdit}
+            handleEdit={handleOpenEdit}
+            nicknames={nicknameData}
+          />
         </div>
         <DialogContent>
           <NickNamesForm formData={formData} />

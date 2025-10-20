@@ -31,6 +31,8 @@ export const Home = PageLoader(
   lazy(() => import("@/features/home/pages/HomePage"))
 );
 
+
+//* Scan Module
 export const QRToPayPage = PageLoader(
   lazy(() => import("@/features/scan/pages/QRToPayPage"))
 );
@@ -41,7 +43,12 @@ export const ScanToPayPage = PageLoader(
 export const QRToRecievePage = PageLoader(
   lazy(() => import("@/features/scan/pages/QRToRecievePage"))
 );
+export const ScanToRecievePage = PageLoader(
+  lazy(() => import("@/features/scan/pages/ScanToRecievePage"))
+)
 
+
+//* History Module
 export const TransactionPage = PageLoader(
   lazy(() => import("@/features/transactions/pages/TransactionHistoryPage"))
 );
@@ -63,4 +70,7 @@ export const ProfileEditPage = PageLoader(
 )
 export const NickNamesPage = PageLoader(
   lazy(() => import("@/features/setting/pages/NickNamesPage"))
+)
+export const ChangePasswordPage = PageLoader(
+  lazy(() => import("@/features/setting/pages/ChangePasswordPage"))
 )

@@ -1,0 +1,55 @@
+import API from "@/app/api/axios";
+import { throwError } from "@/lib/helper/common";
+import type {
+  ChangePasswordPayload,
+  NicknameCreatePayload,
+  NicknameEditPayload,
+} from "@/types/User";
+
+export const changePassword = async (payload: ChangePasswordPayload) => {
+  try {
+    const response = await API.post("/users/change-password", payload);
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const response = await API.get("/users/me");
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
+export const getNicknameList = async () => {
+  try {
+    const response = await API.get("/users/nickname");
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
+export const createNickname = async (data: NicknameCreatePayload) => {
+  try {
+    const response = await API.post(`/users/nickname`, data);
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
+export const updateNickname = async (data: NicknameEditPayload) => {
+  try {
+    const response = await API.put(`/users/nickname/${data.id}`, {
+      toAccountId: data.toAccountId,
+      nickname: data.nickName,
+    });
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};

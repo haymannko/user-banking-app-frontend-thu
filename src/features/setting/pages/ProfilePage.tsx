@@ -5,12 +5,21 @@ import SettingWedHeader from "../components/shared/SettingWedHeader";
 import ProfileInfoSection from "../components/profile/ProfileInfoSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import PageLoading from "@/components/core/PageLoading";
+import useGetUserData from "@/hooks/useGetUserData";
 
 function ProfilePage() {
   const isMobile = useIsMobile();
 
+  //fetch user info
+  const { info, accountDetail, isUserDataLoading } = useGetUserData();
+
+  if (isUserDataLoading) {
+    return <PageLoading />;
+  }
+
   return (
-    <main className="h-full text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
+    <main className="h-full md:h-auto text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
       <div>
         {isMobile ? (
           <MobileHeader
@@ -24,10 +33,15 @@ function ProfilePage() {
             description="update your photo and personal detail here."
           />
         )}
-        <SettingProfileSection isEdit />
-        <ProfileInfoSection />
+        <SettingProfileSection
+          isEdit
+          name={info.fullname}
+          accountNumber={accountDetail.accountNumber}
+          balance={accountDetail.currentBalance}
+        />
+        <ProfileInfoSection user={info} />
       </div>
-      <Button className="w-full py-5 mt-3 md:max-w-40 md:float-end" asChild>
+      <Button className="w-full py-5 my-3 md:max-w-40 md:float-end" asChild>
         <Link to="/settings/profile/edit">Edit</Link>
       </Button>
     </main>

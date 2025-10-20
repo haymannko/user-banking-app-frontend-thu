@@ -1,4 +1,4 @@
-import { ScanLayout } from "../constants/lazyload";
+import { ScanLayout, ScanToRecievePage } from "../constants/lazyload";
 import {
   QRToPayPage,
   QRToRecievePage,
@@ -21,6 +21,10 @@ const scanRouter = [
       {
         path: "qr-to-recieve",
         element: <QRToRecievePage />,
+      },
+      {
+        path: "scan-to-recieve",
+        element: <ScanToRecievePage />,
       },
     ],
   },

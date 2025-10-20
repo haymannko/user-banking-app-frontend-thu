@@ -1,10 +1,8 @@
-import MobileHeader from "@/components/core/MobileHeader";
 import QRWithLogo from "./QRWithLogo";
 
 function QRToRecieveQRDisplay() {
   return (
-    <div className="flex flex-col justify-center items-center w-full md:w-1/2 gap-5">
-      <MobileHeader backTo="/" title="QR to Recieve" />
+    <div className="flex  flex-1 flex-col justify-center h-full items-center w-full md:w-1/2 gap-5">
       <div className="text-center">
         <h1 className="text-xl font-semibold tracking-wide text-black-pearl-700">
           XXX XXX 4643

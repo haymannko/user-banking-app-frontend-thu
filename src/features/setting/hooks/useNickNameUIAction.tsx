@@ -1,4 +1,4 @@
-import type { Nickname } from "@/types/Nickname";
+import type { Nickname } from "@/types/User";
 import { useCallback, useState } from "react";
 
 function useNickNameUIAction() {

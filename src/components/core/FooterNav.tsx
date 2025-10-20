@@ -6,6 +6,7 @@ const NO_NAV_PAGES = [
   "/register",
   "/scan/qr-to-pay",
   "/scan/scan-to-pay",
+  "/scan/scan-to-recieve",
   "/scan/qr-to-recieve",
   "/settings",
   "/settings/profile",

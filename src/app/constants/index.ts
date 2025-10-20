@@ -30,6 +30,11 @@ export const menu = [
         icon: "",
       },
       {
+        name: "Scan to Recieve",
+        link: "/scan/scan-to-recieve",
+        icon: ""
+      },
+      {
         name: "QR to Pay",
         link: "/scan/qr-to-pay",
         icon: "",
@@ -39,6 +44,7 @@ export const menu = [
         link: "/scan/qr-to-recieve",
         icon: "",
       },
+      
     ],
   },
   {

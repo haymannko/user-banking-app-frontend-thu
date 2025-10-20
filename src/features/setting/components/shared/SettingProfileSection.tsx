@@ -5,9 +5,17 @@ import { Link } from "react-router-dom";
 
 type SettingProfileSection = {
   isEdit?: boolean;
+  name?: string;
+  accountNumber?: string;
+  balance?: number;
 };
 
-function SettingProfileSection({ isEdit }: SettingProfileSection) {
+function SettingProfileSection({
+  isEdit,
+  name,
+  accountNumber,
+  balance,
+}: SettingProfileSection) {
   const [isShowAmount, setIsShowAmount] = useState(false);
 
   const toggleShowAmount = () => {
@@ -21,15 +29,13 @@ function SettingProfileSection({ isEdit }: SettingProfileSection) {
         <AvatarFallback className="rounded-lg text-primary">CN</AvatarFallback>
       </Avatar>
       <div>
-        <h1 className="text-xl font-semibold text-black-pearl-700">
-          Wai Yan Linn
-        </h1>
+        <h1 className="text-xl font-semibold text-black-pearl-700">{name}</h1>
         <p className="text-sm text-black-pearl-500 mb-2">
-          Account No: 434534445543
+          Account No: {accountNumber}
         </p>
         <p className=" hidden md:flex space-x-2 w-full text-black-pearl-700 justify-center md:justify-start items-center">
           <span className="cursor-default text-lg  select-none font-semibold">
-            {isShowAmount ? "1,000,000 MMK" : "***********"}
+            {isShowAmount ? balance + " MMK" : "***********"}
           </span>
           <span onClick={toggleShowAmount} className="cursor-pointer">
             {isShowAmount ? <Eye /> : <EyeClosed />}

@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import type { Nickname } from "@/types/Nickname";
+import type { Nickname } from "@/types/User";
+import { useCreateNickname, useUpdateNickname } from "@/queries/users.query";
+import Spinner from "@/components/common/Spinner";
 
 const NickNamesSchema = z.object({
   accountNumber: z
@@ -27,13 +29,34 @@ function NickNamesForm({ formData }: NickNamesFormProps) {
   const form = useForm<NickNamesFormValue>({
     resolver: zodResolver(NickNamesSchema),
     defaultValues: {
-      accountNumber: formData?.accountNumber ?? "",
+      accountNumber: formData?.toAccountDetail?.accountNumber ?? "",
       nickName: formData?.nickname ?? "",
     },
   });
 
+  const { mutate: update, isPending: isUpdatePending } = useUpdateNickname();
+  const { mutate: create, isPending: isCreatePending } = useCreateNickname();
+
   const onSubmit = (values: NickNamesFormValue) => {
-    console.log("Favorite account set:", values);
+    let payload;
+
+    if (formData?.id) {
+      payload = {
+        id: formData.id,
+        toAccountId: values.accountNumber,
+        nickName: values.nickName,
+      };
+
+      update(payload);
+      return;
+    }
+
+    payload = {
+      toAccountId: values.accountNumber,
+      nickname: values.nickName,
+    };
+    create(payload);
+    return;
   };
 
   return (
@@ -63,8 +86,13 @@ function NickNamesForm({ formData }: NickNamesFormProps) {
             wrapperClass="mb-6"
           />
 
-          <Button type="submit" className="w-full">
-            {formData ? "Save" : "Save Changes"}
+          <Button
+            type="submit"
+            disabled={isUpdatePending || isCreatePending}
+            className="w-full flex justify-center items-center gap-5"
+          >
+            <span>{!formData ? "Save" : "Save Changes"}</span>
+            {isUpdatePending || (isCreatePending && <Spinner />)}
           </Button>
         </form>
       </Form>

@@ -35,6 +35,7 @@ export type FormInputProps<T extends FieldValues> = Omit<
   type?: HTMLInputTypeAttribute;
   wrapperClass?: string;
   labelClass?: string;
+  isDisable?: boolean;
   minDate?: Date;
   maxDate?: Date;
 };
@@ -60,6 +61,7 @@ function FormDateInput<T extends FieldValues>({
   type,
   wrapperClass,
   labelClass,
+  isDisable,
   ...props
 }: FormInputProps<T>) {
   const [open, setOpen] = useState(false);
@@ -86,6 +88,7 @@ function FormDateInput<T extends FieldValues>({
                 value={value}
                 placeholder="Tomorrow or next week"
                 className={cn("bg-background pr-10", props.className)}
+                disabled={isDisable}
                 onChange={(e) => {
                   setValue(e.target.value);
                   const date = e.target.value;
@@ -103,7 +106,7 @@ function FormDateInput<T extends FieldValues>({
                 }}
               />
               <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger disabled={isDisable} asChild>
                   <Button
                     id="date-picker"
                     variant="ghost"

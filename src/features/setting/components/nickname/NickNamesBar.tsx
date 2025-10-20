@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Nickname } from "@/types/Nickname";
 import { Edit2 } from "lucide-react";
 
 type NickNamesBarProps = {
@@ -8,7 +7,7 @@ type NickNamesBarProps = {
   accountNumber: string;
   className?: string;
   isEdit?: boolean;
-  handleEdit: (data: Nickname) => void;
+  handleEdit: () => void;
 };
 
 function NickNamesBar({
@@ -27,9 +26,7 @@ function NickNamesBar({
       {isEdit && (
         <Button
           variant="ghost"
-          onClick={() =>
-            handleEdit({ accountNumber: accountNumber, nickname: name })
-          }
+          onClick={handleEdit}
           className="absolute cursor-pointer text-black-pearl-700 top-2 right-2"
         >
           <Edit2 />

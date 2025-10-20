@@ -22,6 +22,15 @@ function ScanFooter() {
             <span className="text-center text-xs">Scan To Pay</span>
           </Link>
           <Link
+            to="/scan/scan-to-recieve"
+            className={`flex flex-col gap-y-2 text-primary-custom justify-center items-center ${
+              path === "/scan/scan-to-recieve" && "text-black-pearl-700"
+            }`}
+          >
+            <ScanQrCode className="w-5 h-5" />
+            <span className="text-center text-xs">Scan To Recieve</span>
+          </Link>
+          <Link
             to="/scan/qr-to-pay"
             className={`flex flex-col gap-y-2 text-primary-custom justify-center items-center ${
               path === "/scan/qr-to-pay" && "text-black-pearl-700"

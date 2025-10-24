@@ -53,3 +53,12 @@ export const updateNickname = async (data: NicknameEditPayload) => {
     throwError(error);
   }
 };
+
+export const deleteNickname = async (id: number) => {
+  try {
+    const response = await API.delete(`/users/nickname/${id}`);
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};

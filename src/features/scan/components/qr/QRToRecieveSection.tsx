@@ -1,53 +1,59 @@
-"use client";
-
 import { useCallback, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import QRToRecieveActions from "./QRToRecieveActions";
 import QRToRecieveQRDisplay from "./QRToRecieveQRDisplay";
 import QRToRecieveAmountSetupForm from "./QRToRecieveAmountSetupForm";
 import { errorToast } from "@/lib/helper/customToasts";
 import MobileHeader from "@/components/core/MobileHeader";
+import { useGenerateRecieveQR } from "@/queries/scan.query";
 
 //TODO: have to combine logic with react query and also have to implement handle submint inside the form
 
 function QRToRecieveSection() {
-  const [isQRGenerated, setIsQRGenerated] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+  const [isQRGenerated, setIsQRGenerated] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
+  const [qr, setQr] = useState<string | null>(null);
 
-  const handleDialogOnGenerate = useCallback(() => {
-    setIsQRGenerated(true);
-    setIsDialogOpen(false);
-  }, [isQRGenerated, isDialogOpen]);
+  //query qr generate funtion
+  const { mutateAsync: generateQR } = useGenerateRecieveQR();
+
+  //generate qr function
+  const handleDialogOnGenerate = useCallback(
+    async (value: { amount: number; note?: string }) => {
+      const res = await generateQR({ amount: value.amount, note: value.note });
+
+      if (!res?.data) return;
+
+      setQr(res.data.token);
+      setIsDialogOpen(false);
+      setIsQRGenerated(true);
+    },
+    [qr]
+  );
 
   return (
-    <div className="max-w-4xl h-full w-full text-black-pearl-700 flex flex-col md:flex-row justify-between items-center gap-8 pb-10 p-6 mx-auto border-gray-100">
+    <div className="max-w-xl h-full w-full text-black-pearl-700 flex flex-col justify-between items-center gap-8 pb-10 p-6 mx-auto border-gray-100">
       <MobileHeader backTo="/" title="QR to Recieve" />
-      <QRToRecieveQRDisplay />
-      <div className="flex flex-col w-full md:w-1/2 gap-5">
-        <QRToRecieveActions />
-        <Dialog
-          open={isDialogOpen}
-          onOpenChange={(open) => {
-            //*dialog can't be open until qr generate
-            if (!isQRGenerated) {
-              errorToast("Sorry :(", "You need to fill the form first!!");
-              return;
-            }
-            setIsDialogOpen(open);
-          }}
-        >
-          <DialogTrigger asChild>
-            <Button>Setup Receive Amount</Button>
-          </DialogTrigger>
+      <QRToRecieveQRDisplay qr={qr} />
+      <QRToRecieveActions />
 
-          <DialogContent className="md:max-w-lg max-w-[350px]">
-            <QRToRecieveAmountSetupForm
-              handleDialogOnGenerate={handleDialogOnGenerate}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          //*dialog can't be open until qr generate
+          if (!isQRGenerated) {
+            errorToast("Sorry :(", "You need to fill the form first!!");
+            return;
+          }
+          setIsDialogOpen(open);
+        }}
+      >
+        <DialogContent className="md:max-w-lg max-w-[350px]">
+          <QRToRecieveAmountSetupForm
+            handleDialogOnGenerate={handleDialogOnGenerate}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

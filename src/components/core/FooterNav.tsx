@@ -12,6 +12,7 @@ const NO_NAV_PAGES = [
   "/settings/profile",
   "/settings/profile/edit",
   "/settings/nicknames",
+  "/settings/change-password",
 ];
 
 function FooterNav() {

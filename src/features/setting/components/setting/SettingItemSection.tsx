@@ -17,8 +17,11 @@ function SettingItemSection() {
         <Switch />
       </div>
 
-      <Link to="" className="w-full border rounded-lg p-3">
-        Change Mobile Pin
+      <Link
+        to="/settings/change-password"
+        className="w-full border rounded-lg p-3"
+      >
+        Change Password
       </Link>
       <Select>
         <SelectTrigger className="w-full text-base placeholder:text-black-pearl-700 py-6.5">
@@ -34,10 +37,10 @@ function SettingItemSection() {
         </SelectContent>
       </Select>
 
-      <Link to="" className="w-full border rounded-lg p-3">
+      <Link to="/settings" className="w-full border rounded-lg p-3">
         Change Transaction Pin
       </Link>
-      <Link to="" className="w-full border rounded-lg p-3">
+      <Link to="/settings/nicknames" className="w-full border rounded-lg p-3">
         Nickname
       </Link>
       <Link

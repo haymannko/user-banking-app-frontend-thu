@@ -1,8 +1,13 @@
+import MobileHeader from "@/components/core/MobileHeader";
 import ScanWithCamera from "../components/scan/ScanWithCamera";
 
 function ScanToRecievePage() {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="w-full h-full relative flex flex-col justify-center items-center">
+      <MobileHeader
+        title="Scan to Recieve"
+        className="absolute top-5 left-1/2 -translate-x-1/2 text-white z-20 w-4/5"
+      />
       <div className="md:block hidden mb-4">
         <h1 className="text-3xl mb-2 text-center font-semibold text-black-pearl-700">
           Show Your QR Code to the Camera

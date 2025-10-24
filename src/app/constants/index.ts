@@ -1,11 +1,4 @@
-import {
-  HelpingHand,
-  History,
-  Home,
-  icons,
-  ScanLine,
-  Settings,
-} from "lucide-react";
+import { HelpingHand, History, Home, ScanLine, Settings } from "lucide-react";
 
 export const menu = [
   {
@@ -30,21 +23,21 @@ export const menu = [
         icon: "",
       },
       {
+        name: "QR to Recieve",
+        link: "/scan/qr-to-recieve",
+        icon: "",
+      },
+
+      {
         name: "Scan to Recieve",
         link: "/scan/scan-to-recieve",
-        icon: ""
+        icon: "",
       },
       {
         name: "QR to Pay",
         link: "/scan/qr-to-pay",
         icon: "",
       },
-      {
-        name: "QR to Recieve",
-        link: "/scan/qr-to-recieve",
-        icon: "",
-      },
-      
     ],
   },
   {

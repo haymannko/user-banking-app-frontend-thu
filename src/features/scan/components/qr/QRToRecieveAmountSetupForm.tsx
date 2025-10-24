@@ -18,7 +18,10 @@ const QRReceiveAmountSchema = z.object({
 type QRReceiveAmountFormValue = z.infer<typeof QRReceiveAmountSchema>;
 
 type QRToRecieveAmountSetupFormProps = {
-  handleDialogOnGenerate: () => void;
+  handleDialogOnGenerate: (value: {
+    amount: number;
+    note?: string;
+  }) => Promise<void>;
 };
 
 function QRToRecieveAmountSetupForm({
@@ -35,7 +38,10 @@ function QRToRecieveAmountSetupForm({
   const navigate = useNavigate();
 
   const onSubmit = (values: QRReceiveAmountFormValue) => {
-    handleDialogOnGenerate();
+    handleDialogOnGenerate({
+      amount: Number(values.amount),
+      note: values.note,
+    });
   };
 
   return (

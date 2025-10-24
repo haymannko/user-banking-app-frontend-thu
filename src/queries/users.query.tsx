@@ -2,6 +2,7 @@ import { errorToast, successToast } from "@/lib/helper/customToasts";
 import {
   changePassword,
   createNickname,
+  deleteNickname,
   getCurrentUser,
   getNicknameList,
   updateNickname,
@@ -69,6 +70,21 @@ export const useUpdateNickname = () => {
     },
     onError: () => {
       errorToast("Failed", "Nickname update failed.");
+    },
+  });
+};
+
+export const useDeleteNickname = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteNickname(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["nickname"] });
+      successToast("Success", "Nickname deleted successfully.");
+    },
+    onError: (error) => {
+      errorToast("Failed", error.message);
     },
   });
 };

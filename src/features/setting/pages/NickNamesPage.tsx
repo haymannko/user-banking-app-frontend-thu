@@ -6,7 +6,6 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import NickNamesForm from "../components/nickname/NickNamesForm";
 import useNickNameUIAction from "../hooks/useNickNameUIAction";
 import { useGetNicknameList } from "@/queries/users.query";
-import PageLoading from "@/components/core/PageLoading";
 import { dummyNickname } from "@/app/constants/dummyData";
 
 function NickNamesPage() {
@@ -24,10 +23,6 @@ function NickNamesPage() {
 
   const nicknameData = nicknames?.data ?? dummyNickname;
 
-  if (isLoading) {
-    return <PageLoading />;
-  }
-
   return (
     <main className="h-full md:h-auto text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
@@ -41,6 +36,7 @@ function NickNamesPage() {
             isEdit={isEdit}
             handleEdit={handleOpenEdit}
             nicknames={nicknameData}
+            isLoading={isLoading}
           />
         </div>
         <DialogContent>

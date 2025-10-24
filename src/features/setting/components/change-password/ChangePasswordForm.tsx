@@ -97,7 +97,7 @@ function ChangePasswordForm() {
 
           <Button
             type="submit"
-            disabled={isPending || !form.formState.isValid}
+            disabled={isPending}
             className="w-full py-5 flex gap-6 text-base"
           >
             <span>Update Password</span>

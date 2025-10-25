@@ -14,32 +14,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useGetFromAccounts } from "@/queries/users.query";
-import type { SwitchAccountDetail } from "@/types/User";
+import { useGetFromAccounts, useSwitchAccount } from "@/queries/users.query";
 import { Check, Wallet } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
-  onChange?: (account: SwitchAccountDetail | null) => void;
   className?: string;
 };
 
-function ProfileAccountSwitchBox({ onChange, className }: Props) {
+function ProfileAccountSwitchBox({ className }: Props) {
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { data: accounts, isLoading } = useGetFromAccounts({
     enabled: !!open,
   });
+  const { mutateAsync: switchAccount, isPending } = useSwitchAccount();
 
   const options = accounts?.data.fromAccountsOptions || [];
 
-  const handleSelect = (idStr: string) => {
+  const handleSelect = async (idStr: string) => {
     const id = Number(idStr);
+    setOpen(false);
+    await switchAccount(id);
     const newValue = id === selectedId ? null : id;
     setSelectedId(newValue);
-    onChange?.(options.find((o) => o.id === newValue) || null);
-    setOpen(false);
   };
 
   return (
@@ -47,10 +46,11 @@ function ProfileAccountSwitchBox({ onChange, className }: Props) {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
+          disabled={isPending}
           className={cn("p-2", className)}
           aria-expanded={open}
         >
-          <Wallet className="w-5 h-5" />
+          {isPending ? <Spinner /> : <Wallet className="w-5 h-5" />}
         </Button>
       </PopoverTrigger>
 

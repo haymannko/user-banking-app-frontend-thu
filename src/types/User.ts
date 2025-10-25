@@ -53,3 +53,15 @@ export type NicknameCreatePayload = {
   toAccountId: string;
   nickname: string;
 };
+
+export type SwitchAccountDetail = {
+  id: number;
+  accountNumber: string;
+  balance: number;
+};
+
+export type SwitchAccounts = {
+  fromAccountsOptions: SwitchAccountDetail[];
+};
+
+export type SwitchAccountsResponse = BaseResponse<SwitchAccounts>;

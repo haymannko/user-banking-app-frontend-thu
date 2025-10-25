@@ -62,3 +62,25 @@ export const deleteNickname = async (id: number) => {
     throwError(error);
   }
 };
+
+export const getFromAccounts = async () => {
+  try {
+    const response = await API.get("/users/from-accounts");
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
+export const mediaUpload = async (data: FormData) => {
+  try {
+    const response = await API.post("/media/upload", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};

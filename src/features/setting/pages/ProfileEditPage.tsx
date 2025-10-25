@@ -26,7 +26,7 @@ function ProfileEditPage() {
       ) : (
         <SettingWedHeader
           title="Profile"
-          description="update your photo and personal detail here."
+          description="Manage your photo and personal information."
         />
       )}
       <SettingProfileSection

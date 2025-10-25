@@ -21,7 +21,7 @@ function NickNamesPage() {
 
   const { data: nicknames, isLoading } = useGetNicknameList();
 
-  const nicknameData = nicknames?.data ?? dummyNickname;
+  const nicknameData = nicknames?.data ?? [];
 
   return (
     <main className="h-full md:h-auto text-black-pearl-700 flex flex-col justify-between md:block md:p-2 md:max-w-4xl gap-5 bg-white">
@@ -29,7 +29,7 @@ function NickNamesPage() {
         <div>
           <SettingWedHeader
             title="Nicknames"
-            description="your close friends and favourite person are here."
+            description="The people who matter most, gathered in one place."
           />
           <NickNamesHeader isEdit={isEdit} editToggle={editToggle} />
           <NickNamesList

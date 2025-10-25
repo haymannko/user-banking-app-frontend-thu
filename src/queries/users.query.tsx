@@ -4,7 +4,9 @@ import {
   createNickname,
   deleteNickname,
   getCurrentUser,
+  getFromAccounts,
   getNicknameList,
+  mediaUpload,
   updateNickname,
 } from "@/services/users.service";
 import type {
@@ -13,6 +15,7 @@ import type {
   NicknameListResponse,
   NicknameEditPayload,
   NicknameCreatePayload,
+  SwitchAccountsResponse,
 } from "@/types/User";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -82,6 +85,28 @@ export const useDeleteNickname = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["nickname"] });
       successToast("Success", "Nickname deleted successfully.");
+    },
+    onError: (error) => {
+      errorToast("Failed", error.message);
+    },
+  });
+};
+
+export const useGetFromAccounts = (props?: any) => {
+  return useQuery<SwitchAccountsResponse>({
+    queryKey: ["from-accounts"],
+    queryFn: getFromAccounts,
+    ...props,
+  });
+};
+
+export const useMediaUpload = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: FormData) => mediaUpload(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      successToast("Success", "Media uploaded successfully.");
     },
     onError: (error) => {
       errorToast("Failed", error.message);

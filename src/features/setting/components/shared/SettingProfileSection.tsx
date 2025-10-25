@@ -1,7 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronRight, Edit, Eye, EyeClosed } from "lucide-react";
+import { ChevronRight, Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ProfileAccountSwitchBox from "./ProfileAccountSwitchBox";
+import ProfileAvatar from "./ProfileAvatar";
 
 type SettingProfileSection = {
   isEdit?: boolean;
@@ -24,10 +25,7 @@ function SettingProfileSection({
 
   return (
     <section className="flex justify-start w-full relative md:justify-start gap-5 items-center md:items-start px-1 py-5 md:py-3">
-      <Avatar className="w-24 h-24 rounded-full md:rounded-xl">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@avatar" />
-        <AvatarFallback className="rounded-lg text-primary">CN</AvatarFallback>
-      </Avatar>
+      <ProfileAvatar />
       <div>
         <h1 className="text-xl font-semibold text-black-pearl-700">{name}</h1>
         <p className="text-sm text-black-pearl-500 mb-2">
@@ -43,9 +41,7 @@ function SettingProfileSection({
         </p>
       </div>
       {isEdit ? (
-        <Link to="profile/edit" className="top-4 right-4 absolute">
-          <Edit size={20} />
-        </Link>
+        <ProfileAccountSwitchBox className="absolute top-2 right-2" />
       ) : (
         <Link
           to="profile"

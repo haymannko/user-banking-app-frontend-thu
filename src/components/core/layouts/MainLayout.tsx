@@ -3,6 +3,7 @@ import { AppSidebar } from "../sidebar/app-sidebar";
 import Header from "@/components/core/sidebar/header";
 import { Outlet } from "react-router-dom";
 import FooterNav from "../FooterNav";
+import ChatWindow from "@/features/faq/components/chat/ChatWindow";
 export default function MainLayout() {
   return (
     <SidebarProvider
@@ -18,6 +19,7 @@ export default function MainLayout() {
         </main>
         <FooterNav />
       </div>
+      <ChatWindow />
     </SidebarProvider>
   );
 }

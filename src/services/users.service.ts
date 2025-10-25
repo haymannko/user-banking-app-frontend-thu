@@ -72,6 +72,15 @@ export const getFromAccounts = async () => {
   }
 };
 
+export const switchAccount = async (accountId: number) => {
+  try {
+    const response = await API.post("/users/switch-account", { accountId });
+    return response.data;
+  } catch (error) {
+    throwError(error);
+  }
+};
+
 export const mediaUpload = async (data: FormData) => {
   try {
     const response = await API.post("/media/upload", data, {

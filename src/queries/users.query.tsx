@@ -7,6 +7,7 @@ import {
   getFromAccounts,
   getNicknameList,
   mediaUpload,
+  switchAccount,
   updateNickname,
 } from "@/services/users.service";
 import type {
@@ -97,6 +98,20 @@ export const useGetFromAccounts = (props?: any) => {
     queryKey: ["from-accounts"],
     queryFn: getFromAccounts,
     ...props,
+  });
+};
+
+export const useSwitchAccount = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (accountId: number) => switchAccount(accountId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [] });
+      successToast("Success", "Account switched successfully.");
+    },
+    onError: (error) => {
+      errorToast("Failed", error.message);
+    },
   });
 };
 

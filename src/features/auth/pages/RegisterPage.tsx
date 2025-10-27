@@ -126,7 +126,6 @@ const RegisterPage: React.FC = () => {
             onSubmit={handleFaceScanSubmit}
             onContinue={() => {
               console.log("Continue pressed after scan.");
-              // You could redirect or show success UI here
             }}
           />
         )}

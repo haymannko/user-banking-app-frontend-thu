@@ -5,14 +5,18 @@ import "./styles/index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./app/routes/router";
 import { Toaster } from "./components/ui/sonner";
+import { Provider } from "react-redux";
+import { store } from "./app/store/store";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router}></RouterProvider>
-      <Toaster position="top-left" />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider>
+        <Toaster position="top-left" />
+      </QueryClientProvider>
+    </Provider>
   </StrictMode>
 );

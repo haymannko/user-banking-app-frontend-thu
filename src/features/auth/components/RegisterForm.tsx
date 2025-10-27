@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { register } from "../hooks/authReducer";
+import type { AppDispatch } from "../../../app/store/store";
+
+import { toast } from "react-toastify";
 import {
   Select,
   SelectTrigger,
@@ -7,45 +11,57 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-
-import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RadioGroup } from "@/components/ui/radio-group";
 
 type FormData = {
   fullName: string;
   email: string;
-  gender: string;
-  nationality: string;
-  idType: string;
+  gender: string; // stores gender ID as string
+  nationality: string; // stores nationality ID as string
+  idType: string; // License / Passport
   year: string;
   month: string;
   day: string;
 };
 
-const genders = ["Male", "Female", "Other"];
-const nationalities = [
-  "American",
-  "British",
-  "Canadian",
-  "Australian",
-  "Other",
+const genders = [
+  { id: 1, name: "Male" },
+  { id: 2, name: "Female" },
+  { id: 3, name: "Other" },
 ];
+
+const nationalities = [
+  { id: 1, name: "Myanmar" },
+  { id: 2, name: "Thailand" },
+  { id: 3, name: "Singapore" },
+  { id: 4, name: "Malaysia" },
+  { id: 5, name: "Indonesia" },
+  { id: 6, name: "Philippines" },
+  { id: 7, name: "Vietnam" },
+  { id: 8, name: "Japan" },
+  { id: 9, name: "South Korea" },
+  { id: 10, name: "China" },
+];
+
 const idTypes = ["License", "Passport"];
 
-type RegisterFormProps = {
-  onSubmit: (formData: FormData) => void;
-};
+const RegisterForm: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { isLoading } = useSelector((state: any) => state.auth);
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
-    year: "",
-    month: "",
-    day: "",
     email: "",
     gender: "",
     nationality: "",
     idType: "",
+    year: "",
+    month: "",
+    day: "",
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -57,17 +73,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const validate = () => {
     const newErrors: Partial<FormData> = {};
     if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.year || !formData.month || !formData.day) {
-      newErrors.year = !formData.year ? "Year is required" : undefined;
-      newErrors.month = !formData.month ? "Month is required" : undefined;
-      newErrors.day = !formData.day ? "Day is required" : undefined;
-    }
-
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.nationality)
       newErrors.nationality = "Nationality is required";
-    if (!formData.idType) newErrors.idType = "Select an ID type";
+    if (!formData.idType) newErrors.idType = "ID type is required";
+    if (!formData.year) newErrors.year = "Year is required";
+    if (!formData.month) newErrors.month = "Month is required";
+    if (!formData.day) newErrors.day = "Day is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -75,9 +88,34 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      onSubmit(formData); // call onSubmit prop on successful validation
-    }
+    if (!validate()) return;
+
+    // Compose YYYY-MM-DD
+    const dob = `${formData.year.padStart(4, "0")}-${formData.month.padStart(
+      2,
+      "0"
+    )}-${formData.day.padStart(2, "0")}`;
+
+    const payload = {
+      email: formData.email,
+      fullname: formData.fullName,
+      dateOfBirth: dob,
+      genderId: parseInt(formData.gender),
+      nationalityId: parseInt(formData.nationality),
+      kycType: formData.idType,
+      kycData: formData.fullName, // or replace with another input if needed
+    };
+
+    dispatch(register(payload))
+      .unwrap()
+      .then((user: any) => {
+        toast.success(`Registered new user - ${user.name}`);
+        navigate("/");
+      })
+      .catch((err: any) => {
+        toast.error("Registration failed. Please try again.");
+        console.error(err);
+      });
   };
 
   return (
@@ -89,6 +127,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           value={formData.fullName}
           onChange={(e) => handleChange("fullName", e.target.value)}
         />
+        {errors.fullName && (
+          <p className="text-sm text-red-500">{errors.fullName}</p>
+        )}
 
         <label className="block mb-1 font-medium">Date of Birth</label>
         <div className="flex gap-2">
@@ -97,8 +138,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             placeholder="YYYY"
             value={formData.year}
             onChange={(e) => handleChange("year", e.target.value)}
-            min="1900"
-            max={new Date().getFullYear()}
             className="w-1/3"
           />
           <Input
@@ -106,8 +145,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             placeholder="MM"
             value={formData.month}
             onChange={(e) => handleChange("month", e.target.value)}
-            min="1"
-            max="12"
             className="w-1/3"
           />
           <Input
@@ -115,11 +152,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             placeholder="DD"
             value={formData.day}
             onChange={(e) => handleChange("day", e.target.value)}
-            min="1"
-            max="31"
             className="w-1/3"
           />
         </div>
+        {(errors.year || errors.month || errors.day) && (
+          <p className="text-sm text-red-500">
+            {errors.year || errors.month || errors.day}
+          </p>
+        )}
 
         <label htmlFor="email">Email</label>
         <Input
@@ -128,6 +168,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           value={formData.email}
           onChange={(e) => handleChange("email", e.target.value)}
         />
+        {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
 
         <label htmlFor="gender">Gender</label>
         <Select
@@ -139,8 +180,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           </SelectTrigger>
           <SelectContent>
             {genders.map((gender) => (
-              <SelectItem key={gender} value={gender}>
-                {gender}
+              <SelectItem key={gender.id} value={gender.id.toString()}>
+                {gender.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -159,8 +200,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           </SelectTrigger>
           <SelectContent>
             {nationalities.map((nat) => (
-              <SelectItem key={nat} value={nat}>
-                {nat}
+              <SelectItem key={nat.id} value={nat.id.toString()}>
+                {nat.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -170,14 +211,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         )}
 
         <RadioGroup
-          label=""
+          label="ID Type"
           value={formData.idType}
-          onChange={(val) => handleChange("idType", val)}
+          onChange={(val: string) => handleChange("idType", val)}
           options={idTypes}
-          error={errors.idType}
         />
+        {errors.idType && (
+          <p className="text-sm text-red-500">{errors.idType}</p>
+        )}
 
-        <Button type="submit">Continue</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Registering..." : "Continue"}
+        </Button>
       </form>
     </div>
   );

@@ -5,7 +5,11 @@ const getDynamicBaseUrl = () => {
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("baseUrl");
 
-  return urlParam || import.meta.env.VITE_BASE_URL || "http://localhost:8080/";
+  return (
+    urlParam ||
+    import.meta.env.VITE_BASE_URL ||
+    "https://banking-dummy-backend.onrender.com"
+  );
 };
 
 const AppConfig = {

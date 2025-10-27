@@ -3,16 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 type LoginFormProps = {
-  onSubmit: (email: string) => void;
+  onSubmit: (credentials: { username: string; password: string }) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      onSubmit(email);
+    if (username && password) {
+      onSubmit({ username, password });
     }
   };
 
@@ -20,17 +21,35 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Enter Your Email
+          Email
         </label>
         <Input
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
       </div>
-      <Button type="submit" className="w-full" disabled={!email}>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
+        <Input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={!username || !password}
+      >
         Continue
       </Button>
     </form>

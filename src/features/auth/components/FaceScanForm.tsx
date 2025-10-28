@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 type FaceScanFormProps = {
@@ -14,9 +14,8 @@ const FaceScanForm: React.FC<FaceScanFormProps> = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const socketRef = useRef<WebSocket | null>(null);
-  const [isSocketOpen, setIsSocketOpen] = useState(false);
 
+  // Start camera
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -25,53 +24,23 @@ const FaceScanForm: React.FC<FaceScanFormProps> = ({
           audio: false,
         });
         streamRef.current = stream;
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
+        if (videoRef.current) videoRef.current.srcObject = stream;
       } catch (err) {
         console.error("Error accessing camera", err);
         alert("Could not access camera. Please allow camera permissions.");
       }
     };
 
-    const connectSocket = () => {
-      const socket = new WebSocket("ws://localhost:8080"); // ← change to your WS server URL
-      socketRef.current = socket;
-
-      socket.onopen = () => {
-        console.log("✅ WebSocket connected");
-        setIsSocketOpen(true);
-      };
-
-      socket.onmessage = (msg) => {
-        console.log("📩 WebSocket message:", msg.data);
-      };
-
-      socket.onerror = (err) => {
-        console.error("WebSocket error:", err);
-      };
-
-      socket.onclose = () => {
-        console.warn("🔌 WebSocket closed");
-        setIsSocketOpen(false);
-      };
-    };
-
     startCamera();
-    connectSocket();
 
     return () => {
-      // cleanup camera
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
-      }
-      // cleanup socket
-      if (socketRef.current) {
-        socketRef.current.close();
       }
     };
   }, []);
 
+  // Capture photo
   const handleCapture = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -81,35 +50,16 @@ const FaceScanForm: React.FC<FaceScanFormProps> = ({
     canvas.height = video.videoHeight || 480;
 
     const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob((blob) => {
-        if (blob) {
-          console.log("📸 Captured Blob:", blob);
+    if (!ctx) return;
 
-          // Also show base64 for debugging
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            console.log("🖼️ Base64 preview:", reader.result);
-          };
-          reader.readAsDataURL(blob);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-          // Send via WebSocket if open
-          if (
-            isSocketOpen &&
-            socketRef.current?.readyState === WebSocket.OPEN
-          ) {
-            socketRef.current.send(blob);
-            console.log("🚀 Frame sent to backend via WebSocket");
-          } else {
-            console.warn("❌ WebSocket not connected, skipping send");
-          }
+    canvas.toBlob((blob) => {
+      if (!blob) return;
 
-          onSubmit(blob);
-          onContinue();
-        }
-      }, "image/jpeg");
-    }
+      onSubmit(blob);
+      onContinue();
+    }, "image/jpeg");
   };
 
   return (

@@ -17,10 +17,10 @@ const Header = () => {
   });
 
   return (
-    <header className="px-4 py-4 hidden md:block bg-transparent text-white">
+    <header className="px-4 py-4 hidden md:block bg-transparent ">
       <div className="md:flex hidden items-center justify-between">
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="hover:bg-transparent hover:text-white/80" />
+          <SidebarTrigger className="" />
           <CustomBreadCrumb
             currentPageTitle={crumbs[crumbs.length - 1]?.name}
             links={crumbs.filter((_, i) => i !== crumbs.length - 1)}

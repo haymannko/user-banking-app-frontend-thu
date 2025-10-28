@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
@@ -7,9 +7,9 @@ import { useDropzone } from "react-dropzone";
 import { CloudUpload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { successToast } from "@/lib/helper/customToasts";
 import useImageQRScanner from "../../hooks/useImageQRScanner";
 import useCrop from "../../hooks/useCrop";
+import { useNavigate } from "react-router-dom";
 
 function ScanWithUploadQR() {
   //*crop state
@@ -32,6 +32,7 @@ function ScanWithUploadQR() {
     onCropImageLoad,
   } = useCrop();
 
+  const navigate = useNavigate();
   const { getInputProps, getRootProps, isDragActive } = useDropzone({
     accept: {
       "image/jpeg": [],
@@ -42,6 +43,7 @@ function ScanWithUploadQR() {
 
       if (!file) return;
 
+      //* once img loaded set the crop value from uploaded  image
       const img = new Image();
       img.src = URL.createObjectURL(file);
       img.onload = () => {
@@ -55,7 +57,7 @@ function ScanWithUploadQR() {
     const qrCode = useImageQRScanner({ completedCrop, imgRef });
 
     if (qrCode) {
-      successToast("Success", qrCode.data);
+      navigate(`/transfer?token=${qrCode.data}`);
     }
   };
 

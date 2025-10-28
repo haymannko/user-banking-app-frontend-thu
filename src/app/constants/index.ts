@@ -1,11 +1,4 @@
-import {
-  HelpingHand,
-  History,
-  Home,
-  icons,
-  ScanLine,
-  Settings,
-} from "lucide-react";
+import { HelpingHand, History, Home, ScanLine, Settings } from "lucide-react";
 
 export const menu = [
   {
@@ -15,7 +8,7 @@ export const menu = [
   },
   {
     name: "Transfer",
-    link: "/service",
+    link: "/transfer",
     icon: HelpingHand,
   },
   {
@@ -30,13 +23,19 @@ export const menu = [
         icon: "",
       },
       {
-        name: "QR to Pay",
-        link: "/scan/qr-to-pay",
+        name: "QR to Recieve",
+        link: "/scan/qr-to-recieve",
+        icon: "",
+      },
+
+      {
+        name: "Scan to Recieve",
+        link: "/scan/scan-to-recieve",
         icon: "",
       },
       {
-        name: "QR to Recieve",
-        link: "/scan/qr-to-recieve",
+        name: "QR to Pay",
+        link: "/scan/qr-to-pay",
         icon: "",
       },
     ],
@@ -51,19 +50,4 @@ export const menu = [
     link: "/settings",
     icon: Settings,
   },
-];
-
-export const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
 ];

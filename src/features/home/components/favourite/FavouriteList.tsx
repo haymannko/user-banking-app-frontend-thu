@@ -5,7 +5,7 @@ import FavouriteCardContainer from "./FavouriteCardContainer";
 function FavouriteList() {
   return (
     <div className="w-full col-span-2 col-start-2  flex flex-col justify-center items-center ">
-      <h1 className="text-sm text-start w-full  text-white mb-4">Favourites</h1>
+      <h1 className="text-sm text-start w-full  text-white mb-4">Nicknames</h1>
       <div className="flex flex-col w-full h-full items-center gap-2">
         {Array.from({ length: 3 }).map((_, i) => (
           <FavouriteCard key={i} />

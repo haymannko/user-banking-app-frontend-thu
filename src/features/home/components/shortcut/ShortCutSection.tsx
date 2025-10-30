@@ -3,7 +3,7 @@ import ShortCutCard from "./ShortCutCard";
 
 function ShortCutSection() {
   return (
-    <section className="flex justify-center items-center gap-5 h-full">
+    <section className="flex justify-center items-center gap-5">
       <ShortCutCard
         card={{ title: "Transfer", icon: ArrowLeftRight, link: "/transfer" }}
       />

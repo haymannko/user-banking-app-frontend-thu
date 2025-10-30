@@ -4,20 +4,40 @@ import FavouriteCardContainer from "./FavouriteCardContainer";
 
 function FavouriteList() {
   return (
-    <div className="w-full col-span-2 col-start-2  flex flex-col justify-center items-center ">
-      <h1 className="text-sm text-start w-full  text-white mb-4">Nicknames</h1>
-      <div className="flex flex-col w-full h-full items-center gap-2">
+    <div
+      className="
+        w-full flex flex-col
+        bg-white
+        rounded-2xl
+        shadow-sm md:shadow-md
+        p-4 md:p-5
+        transition-all duration-300
+      "
+    >
+      {/* Header */}
+      <h1 className="text-sm md:text-base font-semibold text-black-pearl-700 mb-3">
+        Nicknames
+      </h1>
+
+      {/* Favourite Cards */}
+      <div className="flex flex-col w-full gap-2.5">
         {Array.from({ length: 3 }).map((_, i) => (
           <FavouriteCard key={i} />
         ))}
-        <FavouriteCardContainer className="bg-black-pearl-400  hover:bg-black-pearl-900/10 justify-center gap-2.5">
-          <p className="text-sm font-medium text-white group-hover:text-white transition-colors">
-            View More
-          </p>
-          <ChevronRight
-            size={14}
-            className="text-white group-hover:text-white transition-colors"
-          />
+
+        {/* View More */}
+        <FavouriteCardContainer
+          className="
+            bg-[#0A3D62]
+            hover:bg-[#0A3D62]/90
+            justify-center items-center gap-2.5
+            rounded-xl
+            transition-colors
+            cursor-pointer
+          "
+        >
+          <p className="text-sm font-medium text-white">View More</p>
+          <ChevronRight size={14} className="text-white" />
         </FavouriteCardContainer>
       </div>
     </div>

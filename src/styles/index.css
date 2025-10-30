@@ -51,11 +51,22 @@
   --color-black-pearl-800: #062236;
   --color-black-pearl-900: #041a29;
 
-  --color-body: #1E2939;
+  --color-custom-secondary-50: #fff9e6;
+  --color-custom-secondary-100: #ffecb2;
+  --color-custom-secondary-200: #ffe28d;
+  --color-custom-secondary-300: #ffd559;
+  --color-custom-secondary-400: #ffcd39;
+  --color-custom-secondary-500: #ffc107;
+  --color-custom-secondary-600: #e8b006;
+  --color-custom-secondary-700: #b58905;
+  --color-custom-secondary-800: #8c6a04;
+  --color-custom-secondary-900: #6b5103;
+
+  --color-body: #1e2939;
   --color-title: #101828;
   --color-subtitle: #364153;
-  --color-caption: #F9FAFB;
-  --color-surface-default:#F3F4F6
+  --color-caption: #f9fafb;
+  --color-surface-default: #f3f4f6;
 }
 
 :root {

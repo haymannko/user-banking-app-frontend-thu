@@ -57,7 +57,7 @@ function MainBanner({
   }, [api, handleNext, autoPlayInterval]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-auto">
       <Carousel
         opts={{
           align: "start",
@@ -87,7 +87,7 @@ function MainBanner({
         <CarouselContent>
           {banners.map((url, index) => (
             <CarouselItem key={index} className="basis-full">
-              <div className="relative w-full aspect-[341/95] overflow-hidden">
+              <div className="relative w-full aspect-[341/95] md:aspect-auto overflow-hidden">
                 <img
                   src={url || exampleImage}
                   alt={`banner-${index}`}

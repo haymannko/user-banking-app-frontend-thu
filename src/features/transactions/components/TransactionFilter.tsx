@@ -56,13 +56,6 @@ const TransactionFilter = ({onChange, currentFilter}: TransactionFilterProps) =>
           }
         </ul>
       </div>
-      <div className="pt-[11px] pb-[9px] bg-surface-default px-[32px]">
-        <ul className="flex gap-2 ml-auto w-fit">
-          {
-            FilterValues.flow.map(t=><Tab key={t.id} title={t.title} handleClick={handleClick} className="bg-black-pearl-500 text-caption border-0" />)
-          }
-        </ul>
-      </div>
     </>
   )
 }

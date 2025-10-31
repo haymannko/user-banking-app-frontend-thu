@@ -6,11 +6,15 @@ import { useGetTransactions } from "@/queries/transactionHistory.query";
 
 const TransactionHistoryPage = () => {
   // will replace with react query later
-  const { data: transactions } = useGetTransactions();
+  const { data: transactions, isLoading, error } = useGetTransactions();
 
   // will replace with react query later
   const [currentFilter, setCurrentFilter] = useState<string>(``);
 
+  if (isLoading) return <p>Loading...</p>;
+  
+  if (error) return <p>Failed to load transactions</p>;  
+  
   return (
     <>
       <MobileHeader backTo="/" title="Transaction History" />
@@ -19,7 +23,7 @@ const TransactionHistoryPage = () => {
           onChange={setCurrentFilter}
           currentFilter={currentFilter}
         />
-        <TransactionList transactions={transactions} />
+        <TransactionList transactions={transactions??[]} />
       </main>
     </>
   );

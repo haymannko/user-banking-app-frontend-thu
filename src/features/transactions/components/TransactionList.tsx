@@ -8,9 +8,9 @@ interface TransactionListProps {
 const TransactionList = ({ transactions }: TransactionListProps) => {
   return (
     <div>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col md:grid md:grid-cols-2 md:gap-[16px] md:px-[32px]">
         {
-          transactions.map(transaction => <li key={transaction.id} className="border-b border-body py-5 px-[32px]">
+          transactions.map(transaction => <li key={transaction.id} className="border-b md:border md:rounded md:shadow border-body md:border-gray-300 py-5 px-[32px]">
             <Link to={transaction.id.toString()}>
               <div className="flex justify-between gap-4">
                 <div className="flex flex-col">

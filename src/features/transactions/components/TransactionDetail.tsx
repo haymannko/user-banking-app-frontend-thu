@@ -1,32 +1,4 @@
 import type { Transaction } from "@/types/transaction.type"
-
-const TRANSACTION_DETAIL_TEMPLATE = [
-  {
-    title: "Transaction Time",
-    content: "25/09/2025 20:22:12",
-  },
-  {
-    title: "Transaction No",
-    content: "123456678",
-  },
-  {
-    title: "Transaction Type",
-    content: "Transfer",
-  },
-  {
-    title: "Transfer To",
-    content: "Aung Phyoe",
-  },
-  {
-    title: "Amount",
-    content: "-50000 MMK",
-  },
-  {
-    title: "Notes",
-    content: "cash",
-  },
-]
-
 interface TransactionDetailProps {
   transaction: Transaction;
 }

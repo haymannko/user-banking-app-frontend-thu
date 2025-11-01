@@ -1,52 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { scrollToBottom } from "@/lib/helper/common";
 import { ISODateFormat, ISOTimeFormat } from "@/lib/helper/dateFormat";
-import { Bot, Image, Mail, Send, UserCircle2 } from "lucide-react";
+import { Bot } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logoImg from "@/assets/images/app_logo.svg";
+import ChatBox from "./ChatBox";
+import ChatInput from "./ChatInput";
+import ChatNav from "./ChatNav";
 // import { useGenerate } from "../../hooks/donor-chat-bot-queries";
-
-type BoxProps = {
-  text: string;
-  time: string;
-};
-
-function RecieveBox({ text, time }: BoxProps) {
-  return (
-    <div className="w-full flex justify-start">
-      <div className="space-x-3 w-1/2 grid grid-cols-6  my-3">
-        <div className="border border-primary p-3 col-span-5 w-fit max-w-full rounded-lg rounded-l-none rounded-b-lg">
-          <div className="flex items-end gap-2 flex-wrap">
-            <p className="text-primary text-sm break-words">{text}</p>
-            <span className="text-xs text-gray-500 whitespace-nowrap">
-              {time}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SenderBox({ text, time }: BoxProps) {
-  return (
-    <div className="w-full flex justify-end">
-      <div className="space-x-3 w-1/2 flex justify-end col-start-2 my-3">
-        <div className="border bg-primary border-primary p-3 w-fit max-w-full rounded-lg rounded-r-none rounded-b-lg">
-          <div className="flex items-end gap-2 flex-wrap">
-            <p className="text-white text-sm break-words">{text}</p>
-            <span className="text-xs text-white/80 whitespace-nowrap">
-              {time}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function DateDivider({ label }: { label: string }) {
   return (
@@ -63,69 +25,6 @@ type ChatBotMessage = {
   message: string;
   time: Date;
 };
-
-function ChatInput({ sendMessage }: { sendMessage: (msg: string) => void }) {
-  const [input, setInput] = useState("");
-
-  const handleSend = () => {
-    const trimmed = input.trim();
-    if (trimmed.length > 0) {
-      sendMessage(trimmed);
-      setInput("");
-    }
-  };
-
-  return (
-    <div className="p-5 flex space-x-5 justify-center items-center">
-      <Input
-        className="rounded-full px-5 h-12 py-6 shadow-md bg-white border border-primary text-base focus:ring-2 focus:ring-dodger-blue-50"
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            handleSend();
-          }
-        }}
-        placeholder="Enter texts"
-      />
-      <Button onClick={handleSend} className="rounded-full h-12 w-12">
-        <Send />
-      </Button>
-    </div>
-  );
-}
-
-type ChatNavProps = {
-  data: { name: string; logo: string };
-};
-
-function ChatNav({ data }: ChatNavProps) {
-  return (
-    <div className="flex justify-between items-center cursor-default border-b border-black/5 p-5">
-      <div className="flex justify-start space-x-2">
-        {data.logo.length !== 0 ? (
-          <img
-            src={data.logo}
-            alt={data.name}
-            className="w-8 h-8 object-cover"
-          />
-        ) : (
-          <img
-            src={
-              "https://i.pinimg.com/736x/dd/cb/36/ddcb361a6f93e2518268638305e528ba.jpg"
-            }
-            alt={data.name}
-            className="w-8 h-8 object-cover"
-          />
-        )}
-        <h2 className="font-semibold text-primary">{data.name}</h2>
-      </div>
-      {/* <UserCircle2 size={20} className="text-neutral-600" /> */}
-    </div>
-  );
-}
 
 function ChatWindow() {
   const [isOpen, setIsOpen] = useState(false);
@@ -155,7 +54,7 @@ function ChatWindow() {
   }, [messages]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed md:bottom-6  bottom-20 right-6 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -176,15 +75,20 @@ function ChatWindow() {
                   <DateDivider label={ISODateFormat(new Date())} />
                 )}
                 <div className="flex flex-col w-full">
+                  <ChatBox
+                    text="👋 Hello! I’m your Banking Assistant. How can I help you today?"
+                    time={ISOTimeFormat(new Date())}
+                  />
                   {messages.map((msg, i) =>
                     msg.type === "user" ? (
-                      <SenderBox
+                      <ChatBox
                         key={i}
                         text={msg.message}
                         time={ISOTimeFormat(new Date())}
+                        isSender
                       />
                     ) : (
-                      <RecieveBox
+                      <ChatBox
                         key={i}
                         text={msg.message}
                         time={ISOTimeFormat(new Date())}
@@ -232,7 +136,7 @@ function ChatWindow() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
-          className="bg-primary fixed bottom-6 right-6 text-white w-14 h-14 rounded-full shadow-md flex items-center justify-center"
+          className="bg-primary fixed md:bottom-6 bottom-24 md:animate-none animate-bounce right-6 text-white w-14 h-14 rounded-full shadow-md flex items-center justify-center"
         >
           <Bot />
         </motion.button>

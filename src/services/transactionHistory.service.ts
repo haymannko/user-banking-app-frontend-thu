@@ -1,78 +1,88 @@
 import API from "@/app/api/axios";
-import type { Transaction } from "@/types/transaction.type";
-import axios from "axios";
+import type { Transaction, TransactionParams } from "@/types/transaction.type";
 
-interface transactionParam{
-  date?: string,
-  type?: "inflow" | "outflow" | "both"
-}
-
-const DUMMY_TRANSACTIONS: Transaction[] = [
+export const DUMMY_TRANSACTIONS: Transaction[] = [
   {
-    "date": "25/09/2025 ",
-    "transactions": [
-      {
-        id: "1",
-        name: "Transfer From Aung Phyoe",
-        amount: 50000,
-        walletId: "123456789",
-        time: "20:22:21"
-      },
-      {
-        id: "2",
-        name: "Transfer From Swam",
-        amount: 50000,
-        walletId: "123456789",
-        time: "21:22:21"
-      },
-      {
-        id: "3",
-        name: "Transfer From Swam",
-        amount: 50000,
-        walletId: "123456789",
-        time: "21:22:21"
-      }
-    ]
+    id: 1,
+    user: {
+      id: 101,
+      name: "Alice Johnson",
+    },
+    account: {
+      id: 201,
+      accountNumber: "ACC-001-TH",
+      balance: 12500.75,
+    },
   },
   {
-    "date": "25/09/2025 ",
-    "transactions": [
-      {
-        id: "1",
-        name: "Quick Pay",
-        amount: -50000,
-        walletId: "123456789",
-        time: "20:22:21"
-      },
-      {
-        id: "2",
-        name: "Transfer From Swam",
-        amount: -50000,
-        walletId: "123456789",
-        time: "21:22:21"
-      },
-      {
-        id: "3",
-        name: "Transfer From Swam",
-        amount: -50000,
-        walletId: "123456789",
-        time: "21:22:21"
-      }
-    ]
-  }
-]
+    id: 2,
+    user: {
+      id: 102,
+      name: "Bob Smith",
+    },
+    account: {
+      id: 202,
+      accountNumber: "ACC-002-TH",
+      balance: -8920.5,
+    },
+  },
+  {
+    id: 3,
+    user: {
+      id: 103,
+      name: "Charlie Kim",
+    },
+    account: {
+      id: 203,
+      accountNumber: "ACC-003-TH",
+      balance: 450.0,
+    },
+  },
+  {
+    id: 4,
+    user: {
+      id: 104,
+      name: "Diana Lopez",
+    },
+    account: {
+      id: 204,
+      accountNumber: "ACC-004-TH",
+      balance: 37800.2,
+    },
+  },
+  {
+    id: 5,
+    user: {
+      id: 105,
+      name: "Ethan Nguyen",
+    },
+    account: {
+      id: 205,
+      accountNumber: "ACC-005-TH",
+      balance: 1200.0,
+    },
+  },
+];
 
-
-export const getTransactions = async (params: transactionParam) => {
+export const getTransactions = async (params?: TransactionParams): Promise<Transaction[]> => {
   try {
     const res = await API.get("/transactions/", {params});
     return res.data;
   } catch (error) {
-
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || error.message);
-    }
-
+    console.error("API request failed, using dummy data:", error);
+    // if (axios.isAxiosError(error)) {
+    //   throw new Error(error.response?.data?.message || error.message);
+    // }
     return DUMMY_TRANSACTIONS;
   }
 };
+
+export const getTransactionDetail = async (id:string): Promise<Transaction> =>{
+  try{
+    const res = await API.get(`/transactions/${id}`);
+    return res.data;
+  }catch(error){
+    console.error("API request failed, using dummy data:", error);
+    return DUMMY_TRANSACTIONS[0];
+  }
+}

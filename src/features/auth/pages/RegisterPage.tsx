@@ -3,8 +3,11 @@ import RegisterForm from "../components/RegisterForm";
 import LicenseForm from "../components/LicenseUpload";
 import PassportForm from "../components/PassportForm";
 import FaceScanForm from "../components/FaceScanForm";
+import EmailVeriflyForm from "../components/EmailVeriflyForm";
+import { useVerifyEmail } from "@/queries/auth.query";
+import MobileHeader from "@/components/core/MobileHeader";
 
-type Step = "register" | "license" | "passport" | "webcam";
+type Step = "verify-email" | "register" | "license" | "passport" | "webcam";
 
 type FormData = {
   fullName: string;
@@ -28,11 +31,18 @@ type PassportData = {
 };
 
 const RegisterPage: React.FC = () => {
-  const [step, setStep] = useState<Step>("register");
+  const [step, setStep] = useState<Step>("verify-email");
   const [userData, setUserData] = useState<FormData | null>(null);
   const [idPhotos, setIdPhotos] = useState<LicenseData | PassportData | null>(
     null
   );
+
+  const { mutateAsync: verify, isPending } = useVerifyEmail();
+
+  const handleVerify = async (value: { email: string }) => {
+    await verify(value);
+    setStep("register");
+  };
 
   const handleRegisterSubmit = (data: FormData) => {
     setUserData(data);
@@ -65,6 +75,8 @@ const RegisterPage: React.FC = () => {
 
   const getTitle = () => {
     switch (step) {
+      case "verify-email":
+        return "Email Verify";
       case "register":
         return "Personal Details";
       case "license":
@@ -80,6 +92,8 @@ const RegisterPage: React.FC = () => {
 
   const getSubtitle = () => {
     switch (step) {
+      case "verify-email":
+        return "Verify your email address";
       case "webcam":
         return "Turn your head left and right";
       default:
@@ -88,15 +102,20 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-start px-4 py-10">
-      <div className="w-full max-w-6xl min-h-[85vh] bg-white rounded-lg shadow-lg p-6 sm:p-10 mx-auto">
-        <h1 className="text-xl sm:text-2xl font-bold mb-2 text-center">
-          {getTitle()}
-        </h1>
-
-        <p className="text-xs sm:text-sm text-gray-500 mb-6 text-center">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="w-full max-w-[400px] text-black-pearl-700 md:bg-white md:rounded-lg md:shadow-lg p-5 mx-auto">
+        <MobileHeader
+          title={getTitle()}
+          className="bg-transparent md:block p-0 text-black-pearl-700"
+          isShowBackIcon={false}
+        />
+        <p className="text-xs sm:text-sm text-gray-500 mb-8 text-center">
           {getSubtitle()}
         </p>
+
+        {step === "verify-email" && (
+          <EmailVeriflyForm handleSubmit={handleVerify} isPending={isPending} />
+        )}
 
         {step === "register" && (
           <RegisterForm onSubmit={handleRegisterSubmit} />

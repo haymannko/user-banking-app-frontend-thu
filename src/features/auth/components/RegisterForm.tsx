@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RadioGroup } from "@/components/ui/radio-group";
+import { errorToast, successToast } from "@/lib/helper/customToasts";
 
 type FormData = {
   fullName: string;
@@ -109,26 +110,27 @@ const RegisterForm: React.FC = () => {
     dispatch(register(payload))
       .unwrap()
       .then((user: any) => {
-        toast.success(`Registered new user - ${user.name}`);
+        successToast("Success", `Registered new user - ${user.name}`);
         navigate("/");
       })
       .catch((err: any) => {
-        toast.error("Registration failed. Please try again.");
+        errorToast("Failed", "Registration failed. Please try again.");
         console.error(err);
       });
   };
 
   return (
     <div className="register-container">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <label htmlFor="fullName">Full Name</label>
         <Input
           id="fullName"
           value={formData.fullName}
           onChange={(e) => handleChange("fullName", e.target.value)}
+          className="py-6"
         />
         {errors.fullName && (
-          <p className="text-sm text-red-500">{errors.fullName}</p>
+          <p className="text-xs text-red-500">{errors.fullName}</p>
         )}
 
         <label className="block mb-1 font-medium">Date of Birth</label>
@@ -138,25 +140,25 @@ const RegisterForm: React.FC = () => {
             placeholder="YYYY"
             value={formData.year}
             onChange={(e) => handleChange("year", e.target.value)}
-            className="w-1/3"
+            className="w-1/3 py-6"
           />
           <Input
             type="number"
             placeholder="MM"
             value={formData.month}
             onChange={(e) => handleChange("month", e.target.value)}
-            className="w-1/3"
+            className="w-1/3 py-6"
           />
           <Input
             type="number"
             placeholder="DD"
             value={formData.day}
             onChange={(e) => handleChange("day", e.target.value)}
-            className="w-1/3"
+            className="w-1/3 py-6"
           />
         </div>
         {(errors.year || errors.month || errors.day) && (
-          <p className="text-sm text-red-500">
+          <p className="text-xs text-red-500">
             {errors.year || errors.month || errors.day}
           </p>
         )}
@@ -166,16 +168,17 @@ const RegisterForm: React.FC = () => {
           id="email"
           type="email"
           value={formData.email}
+          className="py-6"
           onChange={(e) => handleChange("email", e.target.value)}
         />
-        {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+        {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
 
         <label htmlFor="gender">Gender</label>
         <Select
           value={formData.gender}
           onValueChange={(val) => handleChange("gender", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full py-6">
             <SelectValue placeholder="Select gender" />
           </SelectTrigger>
           <SelectContent>
@@ -187,7 +190,7 @@ const RegisterForm: React.FC = () => {
           </SelectContent>
         </Select>
         {errors.gender && (
-          <p className="text-sm text-red-500">{errors.gender}</p>
+          <p className="text-xs text-red-500">{errors.gender}</p>
         )}
 
         <label htmlFor="nationality">Nationality</label>
@@ -195,7 +198,7 @@ const RegisterForm: React.FC = () => {
           value={formData.nationality}
           onValueChange={(val) => handleChange("nationality", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full py-6">
             <SelectValue placeholder="Select nationality" />
           </SelectTrigger>
           <SelectContent>
@@ -207,7 +210,7 @@ const RegisterForm: React.FC = () => {
           </SelectContent>
         </Select>
         {errors.nationality && (
-          <p className="text-sm text-red-500">{errors.nationality}</p>
+          <p className="text-xs text-red-500">{errors.nationality}</p>
         )}
 
         <RadioGroup
@@ -217,10 +220,10 @@ const RegisterForm: React.FC = () => {
           options={idTypes}
         />
         {errors.idType && (
-          <p className="text-sm text-red-500">{errors.idType}</p>
+          <p className="text-xs text-red-500">{errors.idType}</p>
         )}
 
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="py-6">
           {isLoading ? "Registering..." : "Continue"}
         </Button>
       </form>

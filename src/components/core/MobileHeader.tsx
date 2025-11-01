@@ -18,11 +18,11 @@ export default function MobileHeader({
   titleClassName,
 }: MobileHeaderProps) {
   return (
-    <div className={cn("relative w-full mb-2 md:hidden", className)}>
+    <div className={cn("relative w-full mb-2 md:hidden py-[10px] px-[32px] bg-primary text-white", className)}>
       <h1 className={cn("text-center text-2xl font-semibold", titleClassName)}>
         {title}
       </h1>
-      <Link to={backTo} className="absolute left-0 top-0">
+      <Link to={backTo} className="absolute left-[32px] top-0 bottom-0 m-auto h-fit">
         <ChevronLeft size={iconSize} />
       </Link>
     </div>

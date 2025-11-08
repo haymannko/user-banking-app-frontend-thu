@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'ft/*'
+      - 'Comflict/Check'
+      - 'development'
+      - 'update/*'
   pull_request:
     types: [opened, reopened, synchronize, merge, closed]
     branches:

@@ -29,11 +29,6 @@ jobs:
           workflow_conclusion: success
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-            # - name: Download a Build Artifact
-            #   uses: actions/download-artifact@v6.0.0
-            #   with:
-            #     name: dist
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v5.1.0
         with:

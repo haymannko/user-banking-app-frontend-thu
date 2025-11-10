@@ -2,16 +2,9 @@
 name: Frontend CD pipeline(image deploy to ECR and artifacts upload on github)
 
 on:
-  push:
-    branches:
-      - 'ft/*'
-      - 'Comflict/Check'
-      - 'development'
-      - 'update/*'
-    pull_request:
-      types: [opened, reopened, synchronize, merge, closed]
-      branches:
-        - main
+  workflow_run:
+    workflows: ["Frontend CI"]
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -65,3 +65,11 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Deploy compressed archive
+        uses: devopspolis/deploy-artifact-to-aws-s3@main
+        with:
+          artifact: dist
+          path: .
+          bucket: user-banking-app
+          aws-region: us-east-1

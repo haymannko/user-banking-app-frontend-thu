@@ -66,12 +66,6 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Deploy compressed archive
-        uses: devopspolis/deploy-artifact-to-aws-s3@main
-        with:
-          artifact: dist
-          path: .
-          bucket: user-banking-app
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist s3://user-banking-app/ --delete

@@ -69,6 +69,7 @@ jobs:
       - name: Deploy compressed archive
         uses: devopspolis/deploy-artifact-to-aws-s3@main
         with:
+          timeout-minutes: 10
           artifact: dist
           path: .
           bucket: user-banking-app
